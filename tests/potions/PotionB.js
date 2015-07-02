@@ -1,4 +1,4 @@
-module.exports = require('alchemy.js').define(function (alchemy) {
+module.exports = require('alchemy.js').cork(function (alchemy) {
     'use strict';
 
     return {
