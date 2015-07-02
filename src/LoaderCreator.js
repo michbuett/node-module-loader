@@ -35,17 +35,17 @@ function collectScripts(root, initial) {
 
 /** @private */
 function findDepencies(filepath) {
+    if (/^.*\/Alchemy\.js$/.test(filepath)) {
+        // no further parsing of alchemy core which is not neccessary
+        return [];
+    }
+
     var dirname = path.dirname(filepath);
     var code = fs.readFileSync(filepath, 'utf8').replace(/\n/g, ' ');
     var matches = code.match(/require\(\'.*?\'\)/g) || [];
 
-    var dependencies = matches.map(function (match) {
-        return match.replace(/^require\((\'|\")/, '').replace(/(\'|\")\)$/, '');
-    }).filter(function (module) {
-        return module !== 'alchemy.js'; // TODO: support alchemy
-    }).map(function (moduleName) {
+    return matches.map(function (match) {
+        var moduleName = match.replace(/^require\((\'|\")/, '').replace(/(\'|\")\)$/, '');
         return resolve.sync(moduleName, { basedir: dirname });
     });
-
-    return dependencies;
 }

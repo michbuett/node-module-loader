@@ -65,7 +65,7 @@ module.exports = function (grunt) {
             },
 
             all: [
-                'tests/specs/node'
+                'tests/specs/node/'
             ]
         },
 
@@ -90,7 +90,7 @@ module.exports = function (grunt) {
     grunt.loadNpmTasks('grunt-contrib-jshint');
     grunt.loadNpmTasks('grunt-contrib-watch');
     grunt.loadNpmTasks('grunt-contrib-jasmine');
-    grunt.loadNpmTasks('grunt-jasmine-node');
+    grunt.loadNpmTasks('grunt-jasmine-node-new');
     grunt.loadNpmTasks('grunt-jsonlint');
 
     // define aliases
