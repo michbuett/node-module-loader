@@ -2,10 +2,14 @@
     'use strict';
 
     var moduleToFile = {
-        './potions/PotionA': 'potions/PotionA.js',
-        './potions/PotionB': 'potions/PotionB.js',
-        './PotionB': 'potions/PotionB.js',
+        './potions/PotionA': '../tests/potions/PotionA.js',
         'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
+
+        // './potions/PotionA': 'potions/PotionA.js',
+        // './potions/PotionB': 'potions/PotionB.js',
+        // './PotionB': 'potions/PotionB.js',
+        // './PotionC': 'potions/PotionC.js',
+        // 'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
     };
     var potions = {};
     var requestedUrls = {};
@@ -17,6 +21,9 @@
 
         return potion;
     };
+
+    var onLoad = window.onload;
+    window.onload = null; // allow trigger when ready
 
     loadModule('alchemy.js', function () {
         for (var moduleName in moduleToFile) {
@@ -30,7 +37,7 @@
 
     function loadModule(moduleName, cb) {
         var url = moduleToFile[moduleName];
-        if (requestedUrls[url]) {
+        if (!url || requestedUrls[url]) {
             return;
         }
 
@@ -38,8 +45,11 @@
 
         var script = document.createElement('script');
         script.src = url;
+        script.async = false; // preserve execution order
         script.onload = createOnModuleLoaded(url, cb);
         document.head.appendChild(script);
+
+        console.log('load ' + url);
     }
 
     function createOnModuleLoaded(url, cb) {

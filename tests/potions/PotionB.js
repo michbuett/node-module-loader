@@ -1,3 +1,4 @@
+console.log('loaded Potion B');
 module.exports = require('alchemy.js').cork(function (alchemy) {
     'use strict';
 

@@ -40,6 +40,9 @@ module.exports = function (grunt) {
                 summary: true,
 
                 helpers: [
+                    'tests/loader.js',
+                    'node_modules/alchemy.js/lib/core/Alchemy.js',
+                    'tests/potions/**/*.js'
                 ],
 
                 specs: [
