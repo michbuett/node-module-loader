@@ -40,13 +40,9 @@ describe('LoaderCreator', function () {
                 './PotionC': 'potions/PotionC.js',
             },
 
-            'potions/PotionC.js': {
-                'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            },
+            'potions/PotionC.js': {},
 
-            'potions/PotionD.js': {
-                'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            },
+            'potions/PotionD.js': {},
         });
 
         expect(loader.createDependencyMap(rootpath, './potions/PotionB')).toEqual({
@@ -54,11 +50,10 @@ describe('LoaderCreator', function () {
                 './PotionC': 'potions/PotionC.js',
                 'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
             },
+
             '../node_modules/alchemy.js/lib/core/Alchemy.js': {},
 
-            'potions/PotionC.js': {
-                'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            },
+            'potions/PotionC.js': {},
         });
     });
 });

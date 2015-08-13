@@ -1,5 +1,4 @@
-console.log('loaded Potion C');
-module.exports = require('alchemy.js').cork(function (alchemy) {
+module.exports = (function () {
     'use strict';
 
     return {
@@ -10,6 +9,5 @@ module.exports = require('alchemy.js').cork(function (alchemy) {
             return this.name;
         },
     };
-});
-
+}());
 

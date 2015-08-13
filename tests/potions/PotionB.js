@@ -1,16 +1,17 @@
-console.log('loaded Potion B');
-module.exports = require('alchemy.js').cork(function (alchemy) {
+module.exports = (function () {
     'use strict';
 
-    var potionC = require('./PotionC').brew();
+    var alchemy = require('alchemy.js');
+    var potionC = require('./PotionC');
 
-    return {
+    return alchemy.extend(potionC, {
 
         name: 'Potion B',
 
         getName: function () {
             return potionC.getName.call(this) + ' (extended B)';
         },
-    };
-});
+    });
+}());
+console.log('loaded PotionB');
 
