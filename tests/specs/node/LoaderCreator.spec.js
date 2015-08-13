@@ -9,14 +9,14 @@ describe('LoaderCreator', function () {
         expect(loader.collectScripts()).toEqual([]);
 
         expect(loader.collectScripts(rootpath, './potions/PotionA')).toEqual([
-            'potions/PotionA.js',
             '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            'potions/PotionB.js'
+            'potions/PotionB.js',
+            'potions/PotionA.js',
         ]);
 
         expect(loader.collectScripts(rootpath, './potions/PotionB')).toEqual([
-            'potions/PotionB.js',
             '../node_modules/alchemy.js/lib/core/Alchemy.js',
+            'potions/PotionB.js',
         ]);
     });
 

@@ -12,7 +12,28 @@ module.exports = {
 
 /** @private */
 function collectScripts(root, initial) {
-    return Object.keys(createDependencyMap(root, initial));
+    var map = createDependencyMap(root, initial);
+    var scripts = Object.keys(map);
+
+    scripts = scripts.sort(function (a, b) {
+        var depA = values(map[a]);
+        var depB = values(map[b]);
+
+        if (depA.indexOf(b) >= 0) {
+            // b is dependency of a
+            return 1;
+        }
+
+
+        if (depB.indexOf(a) >= 0) {
+            // a is dependency of b
+            return -1;
+        }
+
+        return 0;
+    });
+
+    return scripts;
 }
 
 /** @private */
