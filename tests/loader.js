@@ -22,7 +22,7 @@
         return potion;
     };
 
-    var onLoad = window.onload;
+    // var onLoad = window.onload;
     window.onload = null; // allow trigger when ready
 
     loadModule('alchemy.js', function () {

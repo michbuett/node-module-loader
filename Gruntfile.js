@@ -82,7 +82,7 @@ module.exports = function (grunt) {
 
             js: {
                 files: ['**/*.js'],
-                tasks: ['jshint', 'jasmine_node', 'jasmine:all'],
+                tasks: ['jshint', 'jasmine_node' /*, 'jasmine:all'*/],
             },
         },
     });
