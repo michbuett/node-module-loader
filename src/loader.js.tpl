@@ -1,39 +1,12 @@
 (function () {
     'use strict';
 
-    var moduleList = [
-        'node_modules/alchemy.js/lib/core/Alchemy.js',
-        'tests/potions/PotionD.js',
-        'tests/potions/PotionC.js',
-        'tests/potions/PotionB.js',
-        'tests/potions/PotionA.js',
-    ];
-
-    var dependencyMap =  {
-        'tests/potions/PotionA.js': {
-            'alchemy.js': 'node_modules/alchemy.js/lib/core/Alchemy.js',
-            './PotionB': 'tests/potions/PotionB.js',
-            './PotionD': 'tests/potions/PotionD.js',
-        },
-
-        'node_modules/alchemy.js/lib/core/Alchemy.js': {},
-
-        'tests/potions/PotionB.js': {
-            'alchemy.js': 'node_modules/alchemy.js/lib/core/Alchemy.js',
-            './PotionC': 'tests/potions/PotionC.js',
-        },
-
-        'tests/potions/PotionC.js': {
-            'alchemy.js': 'node_modules/alchemy.js/lib/core/Alchemy.js',
-        },
-
-        'tests/potions/PotionD.js': {
-            'alchemy.js': 'node_modules/alchemy.js/lib/core/Alchemy.js',
-        },
-    };
-
+    var moduleList = <%= moduleList %>;
+    var dependencyMap =  <%= dependencyMap %>;
     var modules = {};
-    window.modules = modules; // for debugging;
+    var onLoad = window.onload || function () {};
+    var counter = moduleList.length;
+    var currentScriptName = moduleList[0];
 
     window.module = {
         get exports() {
@@ -59,9 +32,6 @@
         return modules[moduleName];
     };
 
-    var onLoad = window.onload || function () {};
-    var counter = moduleList.length;
-    var currentScriptName = moduleList[0];
 
     window.onload = null; // allow trigger when ready
 

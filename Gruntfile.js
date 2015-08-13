@@ -40,7 +40,7 @@ module.exports = function (grunt) {
                 summary: true,
 
                 helpers: [
-                    'tests/loader.js',
+                    '_loader.js'
                 ],
 
                 specs: [
@@ -49,8 +49,7 @@ module.exports = function (grunt) {
             },
 
             all: {
-                src: [
-                ],
+                src: [],
             },
 
         },
@@ -80,7 +79,7 @@ module.exports = function (grunt) {
 
             js: {
                 files: ['**/*.js'],
-                tasks: ['jshint', 'jasmine_node' /*, 'jasmine:all'*/],
+                tasks: ['test'],
             },
         },
     });
@@ -96,6 +95,22 @@ module.exports = function (grunt) {
 
     // define aliases
     grunt.registerTask('lint', ['jsonlint', 'jshint']);
-    grunt.registerTask('test', ['lint', 'jasmine_node:all', 'jasmine:all']);
+    grunt.registerTask('test', ['lint', 'jasmine_node:all', 'buildLoader', 'jasmine:all']);
     grunt.registerTask('default', ['availabletasks']);
+
+    grunt.registerTask('buildLoader', function () {
+        grunt.log.writeln('Build webloader');
+
+        var path = require('path');
+        var fs = require('fs');
+        var template = require('lodash.template');
+        var creator = require('./src/LoaderCreator');
+        var rootpath = path.resolve(__dirname, '');
+        var loaderCode = template(fs.readFileSync('src/loader.js.tpl', 'utf8'))({
+            moduleList: JSON.stringify(creator.collectScripts(rootpath, './tests/potions/PotionA')),
+            dependencyMap: JSON.stringify(creator.createDependencyMap(rootpath, './tests/potions/PotionA')),
+        });
+
+        fs.writeFileSync('_loader.js', loaderCode);
+    });
 };

@@ -4,3 +4,4 @@ node_modules/
 reports/
 .grunt/
 _SpecRunner.html
+_loader.js
