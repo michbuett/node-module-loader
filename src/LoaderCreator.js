@@ -12,28 +12,43 @@ module.exports = {
 
 /** @private */
 function collectScripts(root, initial) {
+    function findNext(map) {
+        var scripts = Object.keys(map);
+
+        for (var i = 0, l = scripts.length; i < l; i++) {
+            var module = scripts[i];
+
+            if (Object.keys(map[module]).length === 0) {
+                return module;
+            }
+        }
+
+        throw 'Cannot find module without dependencies';
+    }
+
+    function removeModule(dependencies, name) {
+        if (name === module) {
+            return;
+        }
+
+        return each(dependencies, function (moduleB) {
+            if (moduleB !== module) {
+                return moduleB;
+            }
+        });
+    }
+
     var map = createDependencyMap(root, initial);
-    var scripts = Object.keys(map);
+    var result = [];
+    var module;
 
-    scripts = scripts.sort(function (a, b) {
-        var depA = values(map[a]);
-        var depB = values(map[b]);
+    while (Object.keys(map).length > 0) {
+        module = findNext(map);
+        map = each(map, removeModule);
+        result.push(module);
+    }
 
-        if (depA.indexOf(b) >= 0) {
-            // b is dependency of a
-            return 1;
-        }
-
-
-        if (depB.indexOf(a) >= 0) {
-            // a is dependency of b
-            return -1;
-        }
-
-        return 0;
-    });
-
-    return scripts;
+    return result;
 }
 
 /** @private */
