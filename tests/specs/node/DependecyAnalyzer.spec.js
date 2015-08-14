@@ -1,7 +1,7 @@
-describe('LoaderCreator', function () {
+describe('DependencyAnalyzer', function () {
     'use strict';
 
-    var loader = require('./../../../src/LoaderCreator');
+    var loader = require('./../../../src/DependencyAnalyzer');
     var path = require('path');
     var rootpath = path.resolve(__dirname, '../..');
 

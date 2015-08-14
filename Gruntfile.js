@@ -104,7 +104,7 @@ module.exports = function (grunt) {
         var path = require('path');
         var fs = require('fs');
         var template = require('lodash.template');
-        var creator = require('./src/LoaderCreator');
+        var creator = require('./src/DependencyAnalyzer');
         var rootpath = path.resolve(__dirname, '');
         var loaderCode = template(fs.readFileSync('src/loader.js.tpl', 'utf8'))({
             moduleList: JSON.stringify(creator.collectScripts(rootpath, './tests/potions/PotionA')),
