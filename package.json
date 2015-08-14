@@ -7,7 +7,7 @@
     "type": "git",
     "url": "https://github.com/michbuett/node-module-loader.git"
   },
-  "main": "src/main.js",
+  "main": "src/LoaderBuilder.js",
   "keywords": [
     "browser",
     "commonJS",

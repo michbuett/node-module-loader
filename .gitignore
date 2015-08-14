@@ -5,3 +5,4 @@ reports/
 .grunt/
 _SpecRunner.html
 _loader.js
+_DependencyAnalyzer_test_loader.js

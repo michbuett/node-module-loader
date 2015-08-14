@@ -78,7 +78,7 @@ module.exports = function (grunt) {
             },
 
             js: {
-                files: ['**/*.js'],
+                files: ['Gruntfile.js', 'src/**/*', 'templates/**/*', 'tests/**/*'],
                 tasks: ['test'],
             },
         },
@@ -102,15 +102,12 @@ module.exports = function (grunt) {
         grunt.log.writeln('Build webloader');
 
         var path = require('path');
-        var fs = require('fs');
-        var template = require('lodash.template');
-        var creator = require('./src/DependencyAnalyzer');
-        var rootpath = path.resolve(__dirname, '');
-        var loaderCode = template(fs.readFileSync('src/loader.js.tpl', 'utf8'))({
-            moduleList: JSON.stringify(creator.collectScripts(rootpath, './tests/potions/PotionA')),
-            dependencyMap: JSON.stringify(creator.createDependencyMap(rootpath, './tests/potions/PotionA')),
-        });
+        var loader = require('./src/LoaderBuilder');
 
-        fs.writeFileSync('_loader.js', loaderCode);
+        loader.build({
+            root: path.resolve(__dirname, ''),
+            modules: ['./tests/potions/PotionA'],
+            target: '_loader.js'
+        });
     });
 };
