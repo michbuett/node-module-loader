@@ -11,7 +11,7 @@ module.exports = {
 };
 
 /** @private */
-function collectScripts(root, initial) {
+function collectScripts(map) {
     function findNext(map) {
         var scripts = Object.keys(map);
 
@@ -38,7 +38,8 @@ function collectScripts(root, initial) {
         });
     }
 
-    var map = createDependencyMap(root, initial);
+    map = map || {};
+
     var result = [];
     var module;
 

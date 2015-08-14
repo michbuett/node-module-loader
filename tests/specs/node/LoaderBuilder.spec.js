@@ -1,4 +1,4 @@
-describe('DependencyAnalyzer', function () {
+describe('LoaderBuilder', function () {
     'use strict';
 
     var loader = require('./../../../src/LoaderBuilder');

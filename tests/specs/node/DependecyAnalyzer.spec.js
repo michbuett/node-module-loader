@@ -5,24 +5,6 @@ describe('DependencyAnalyzer', function () {
     var path = require('path');
     var rootpath = path.resolve(__dirname, '../..');
 
-    it('returns a list of required scripts', function () {
-        expect(loader.collectScripts()).toEqual([]);
-
-        expect(loader.collectScripts(rootpath, './potions/PotionA')).toEqual([
-            '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            'potions/PotionD.js',
-            'potions/PotionC.js',
-            'potions/PotionB.js',
-            'potions/PotionA.js',
-        ]);
-
-        expect(loader.collectScripts(rootpath, './potions/PotionB')).toEqual([
-            '../node_modules/alchemy.js/lib/core/Alchemy.js',
-            'potions/PotionC.js',
-            'potions/PotionB.js',
-        ]);
-    });
-
     it('can create the dependency map', function () {
         expect(loader.createDependencyMap()).toEqual({});
 
@@ -55,5 +37,28 @@ describe('DependencyAnalyzer', function () {
 
             'potions/PotionC.js': {},
         });
+    });
+
+    it('returns a list of required scripts for an empty map', function () {
+        expect(loader.collectScripts()).toEqual([]);
+    });
+
+    it('returns a list of required scripts for non-empty maps', function () {
+        var depMap1 = loader.createDependencyMap(rootpath, './potions/PotionA');
+        var depMap2 = loader.createDependencyMap(rootpath, './potions/PotionB');
+
+        expect(loader.collectScripts(depMap1)).toEqual([
+            '../node_modules/alchemy.js/lib/core/Alchemy.js',
+            'potions/PotionD.js',
+            'potions/PotionC.js',
+            'potions/PotionB.js',
+            'potions/PotionA.js',
+        ]);
+
+        expect(loader.collectScripts(depMap2)).toEqual([
+            '../node_modules/alchemy.js/lib/core/Alchemy.js',
+            'potions/PotionC.js',
+            'potions/PotionB.js',
+        ]);
     });
 });

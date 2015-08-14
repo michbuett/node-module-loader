@@ -11,8 +11,8 @@ module.exports = {
         var rootpath = cfg.root;
         var startModules = cfg.modules;
         var targetName = cfg.target;
-        var moduleList = analyzer.collectScripts(rootpath, startModules);
         var dependencyMap = analyzer.createDependencyMap(rootpath, startModules);
+        var moduleList = analyzer.collectScripts(dependencyMap);
         var loaderScript = template(fs.readFileSync('templates/loader.tpl', 'utf8'))({
             moduleList: JSON.stringify(moduleList),
             dependencyMap: JSON.stringify(dependencyMap),
