@@ -26,7 +26,7 @@
 
             moduleName = dependencies[name];
         } else {
-            moduleName = (name + '.js').replace(/^\.\//, '').replace(/\.js\.js$/, '.js');
+            moduleName = (name + '.js').replace(/^(\.\/)?(\.\.\/)*/, '').replace(/\.js\.js$/, '.js');
         }
 
         return modules[moduleName];

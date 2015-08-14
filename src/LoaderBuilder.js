@@ -1,9 +1,10 @@
 'use strict';
 
-// var path = require('path');
 var fs = require('fs');
+var path = require('path');
 var template = require('lodash.template');
 var analyzer = require('./DependencyAnalyzer');
+var loaderTpl = path.resolve(__dirname, '../templates/loader.tpl');
 
 module.exports = {
 
@@ -13,7 +14,7 @@ module.exports = {
         var targetName = cfg.target;
         var dependencyMap = analyzer.createDependencyMap(rootpath, startModules);
         var moduleList = analyzer.collectScripts(dependencyMap);
-        var loaderScript = template(fs.readFileSync('templates/loader.tpl', 'utf8'))({
+        var loaderScript = template(fs.readFileSync(loaderTpl, 'utf8'))({
             moduleList: JSON.stringify(moduleList),
             dependencyMap: JSON.stringify(dependencyMap),
         });
