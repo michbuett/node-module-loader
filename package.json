@@ -1,17 +1,20 @@
 {
-  "name": "alchemy-loader",
-  "description": "A simple module loader and bundler for alchemy.js potions",
+  "name": "node-module-loader",
+  "description": "A very simple loader for commonJS modules",
   "author": "Michael Büttner <michbuett@gmx.de>",
   "version": "0.0.0",
   "repository": {
     "type": "git",
-    "url": "https://github.com/michbuett/alchemy-loader.git"
+    "url": "https://github.com/michbuett/node-module-loader.git"
   },
-  "main": "lib/core/Alchemy.js",
+  "main": "src/main.js",
   "keywords": [
+    "browser",
+    "commonJS",
+    "node-module-loader",
     "module-loader"
   ],
-  "license": "MIT",
+  "license": "JSON",
   "devDependencies": {
     "alchemy.js": "^0.4.4",
     "grunt": "~0.4.5",
