@@ -14,8 +14,10 @@ module.exports = {
         var targetName = cfg.target;
         var dependencyMap = analyzer.createDependencyMap(rootpath, startModules);
         var moduleList = analyzer.collectScripts(dependencyMap);
+        var moduleHashes = analyzer.collectHashes(moduleList);
         var loaderScript = template(fs.readFileSync(loaderTpl, 'utf8'))({
             moduleList: JSON.stringify(moduleList),
+            moduleHashes: JSON.stringify(moduleHashes),
             dependencyMap: JSON.stringify(dependencyMap),
         });
 

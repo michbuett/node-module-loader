@@ -61,4 +61,14 @@ describe('DependencyAnalyzer', function () {
             'potions/PotionB.js',
         ]);
     });
+
+    // it('returns a list of hashes for each module', function () {
+    //     expect(loader.collectHashes([
+    //         'potions/PotionA.js',
+    //         'potions/PotionB.js',
+    //     ])).toEqual({
+    //         'potions/PotionA.js': 'afc13dbb1fe93e5dbfa0f4f5fcb0d977',
+    //         'potions/PotionB.js': '5fdfc2e5ea61b493f5d136600ee1d479',
+    //     });
+    // });
 });

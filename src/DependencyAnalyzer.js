@@ -7,6 +7,7 @@ var each = require('pro-singulis');
 
 module.exports = {
     collectScripts: collectScripts,
+    collectHashes: collectHashes,
     createDependencyMap: createDependencyMap,
 };
 
@@ -48,6 +49,13 @@ function collectScripts(map) {
         map = each(map, removeModule);
         result.push(module);
     }
+
+    return result;
+}
+
+/** @private */
+function collectHashes(list) {
+    var result = {};
 
     return result;
 }

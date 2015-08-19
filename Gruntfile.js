@@ -56,6 +56,7 @@ module.exports = function (grunt) {
 
         jasmine_node: {
             options: {
+                helpers: [ 'vendor/*.js' ],
                 forceExit: true,
                 match: '.',
                 matchall: false,

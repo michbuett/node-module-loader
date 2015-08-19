@@ -2,6 +2,7 @@
     'use strict';
 
     var moduleList = <%= moduleList %>;
+    var moduleHashes = <%= moduleHashes %>;
     var dependencyMap =  <%= dependencyMap %>;
     var modules = {};
     var onLoad = window.onload || function () {};
@@ -14,6 +15,7 @@
         },
 
         set exports(exp) {
+            // console.log('register', exp, HashCode(exp));
             modules[currentScriptName] = exp;
         },
     };
