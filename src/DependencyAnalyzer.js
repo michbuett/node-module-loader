@@ -4,6 +4,7 @@ var fs = require('fs');
 var path = require('path');
 var resolve = require('resolve');
 var each = require('pro-singulis');
+var normalize = require('./NormalizePath');
 
 module.exports = {
     collectScripts: collectScripts,
@@ -81,7 +82,7 @@ function createDependencyMap(root, initial) {
         var map = createMapForModule(root, filepath);
 
         unresolved = unresolved.concat(values(map));
-        visited[filepath] = map;
+        visited[normalize(filepath)] = map;
     }
 
     return visited;
@@ -97,7 +98,7 @@ function createMapForModule(root, module) {
     for (var i = 0, l = required.length; i < l; i++) {
         var key = required[i];
         var absPath = resolve.sync(key, { basedir: dirname });
-        result[key] = path.relative(root, absPath);
+        result[key] = normalize(path.relative(root, absPath));
     }
 
     return result;

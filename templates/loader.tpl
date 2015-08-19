@@ -3,6 +3,8 @@
 
     var moduleList = <%= moduleList %>;
     var dependencyMap =  <%= dependencyMap %>;
+    var sourcePath = '<%= sourcePath %>';
+    var normalize = <%= normalize %>;
     var modules = {};
     var onLoad = window.onload || function () {};
     var counter = moduleList.length;
@@ -26,7 +28,7 @@
 
             moduleName = dependencies[name];
         } else {
-            moduleName = (name + '.js').replace(/^(\.\/)?(\.\.\/)*/, '').replace(/\.js\.js$/, '.js');
+            moduleName = normalize(sourcePath + name.replace(/^(\.\/)?(\.\.\/)*/, '') + '.js');
         }
 
         return modules[moduleName];
@@ -44,10 +46,11 @@
         script.onload = function () {
             counter--;
 
-            currentScriptName = moduleList[i + 1];
-
             if (counter === 0) {
+                currentScriptName = null;
                 onLoad();
+            } else {
+                currentScriptName = moduleList[i + 1];
             }
         };
 
