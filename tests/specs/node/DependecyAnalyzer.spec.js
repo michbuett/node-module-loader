@@ -4,6 +4,7 @@ describe('DependencyAnalyzer', function () {
     var loader = require('./../../../src/DependencyAnalyzer');
     var path = require('path');
     var rootpath = path.resolve(__dirname, '../..');
+    var grunt = require('grunt');
 
     it('can create the dependency map', function () {
         expect(loader.createDependencyMap()).toEqual({});
@@ -37,6 +38,42 @@ describe('DependencyAnalyzer', function () {
 
             'potions/PotionC.js': {},
         });
+    });
+
+    it('supports a path map when creating the dependency map', function () {
+        // prepare
+        ['PotionA', 'PotionB', 'PotionC', 'PotionD'].forEach(function (f) {
+            grunt.file.copy(rootpath + '/potions/' + f + '.js', rootpath + '/../foo/bar/baz/' + f + '.js');
+        });
+
+        var pathMap = {
+            'potions': '../foo/bar/baz'
+        };
+
+        // execute
+        var result = loader.createDependencyMap(rootpath, './potions/PotionA', pathMap);
+
+        // verify
+        expect(result).toEqual({
+            '../foo/bar/baz/PotionA.js': {
+                'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
+                './PotionB': '../foo/bar/baz/PotionB.js',
+                './PotionD': '../foo/bar/baz/PotionD.js',
+            },
+
+            '../node_modules/alchemy.js/lib/core/Alchemy.js': {},
+
+            '../foo/bar/baz/PotionB.js': {
+                'alchemy.js': '../node_modules/alchemy.js/lib/core/Alchemy.js',
+                './PotionC': '../foo/bar/baz/PotionC.js',
+            },
+
+            '../foo/bar/baz/PotionC.js': {},
+
+            '../foo/bar/baz/PotionD.js': {},
+        });
+
+        grunt.file.delete(rootpath + '/../foo');
     });
 
     it('returns a list of required scripts for an empty map', function () {

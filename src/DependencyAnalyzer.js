@@ -24,7 +24,7 @@ function collectScripts(map) {
             }
         }
 
-        throw 'Cannot find module without dependencies';
+        throw 'Cannot find module without dependencies: ' + JSON.stringify(map, null, '  ');
     }
 
     function removeModule(dependencies, name) {
@@ -64,7 +64,7 @@ function findRequired(filepath) {
 }
 
 /** @private */
-function createDependencyMap(root, initial) {
+function createDependencyMap(root, initial, pathmap) {
     var visited = {};
     var unresolved = (initial ? [].concat(initial) : []).map(function (moduleName) {
         return path.relative(root, resolve.sync(moduleName, {
@@ -79,17 +79,17 @@ function createDependencyMap(root, initial) {
             continue;
         }
 
-        var map = createMapForModule(root, filepath);
+        var map = createMapForModule(root, filepath, pathmap);
 
         unresolved = unresolved.concat(values(map));
-        visited[normalize(filepath)] = map;
+        visited[normalize(filepath, pathmap)] = map;
     }
 
     return visited;
 }
 
 /** @private */
-function createMapForModule(root, module) {
+function createMapForModule(root, module, pathmap) {
     var filepath = root + '/' + module;
     var required = findRequired(filepath);
     var result = {};
@@ -98,7 +98,7 @@ function createMapForModule(root, module) {
     for (var i = 0, l = required.length; i < l; i++) {
         var key = required[i];
         var absPath = resolve.sync(key, { basedir: dirname });
-        result[key] = normalize(path.relative(root, absPath));
+        result[key] = normalize(path.relative(root, absPath), pathmap);
     }
 
     return result;

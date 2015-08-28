@@ -5,6 +5,7 @@
     var dependencyMap =  <%= dependencyMap %>;
     var sourcePath = '<%= sourcePath %>';
     var normalize = <%= normalize %>;
+    var pathmap = <%= pathmap %>;
     var modules = {};
     var onLoad = window.onload || function () {};
     var counter = moduleList.length;
@@ -28,7 +29,7 @@
 
             moduleName = dependencies[name];
         } else {
-            moduleName = normalize(sourcePath + name.replace(/^(\.\/)?(\.\.\/)*/, '') + '.js');
+            moduleName = normalize(name.replace(/^(\.\/)?(\.\.\/)*/, '') + '.js', pathmap);
         }
 
         return modules[moduleName];

@@ -18,11 +18,18 @@ describe('NormalizePath', function () {
     });
 
     it('takes care of the "../" parts', function () {
-        console.log(require('path').normalize('../../foo/../../bar'));
-
         expect(normalize('foo/bar/../baz')).toBe('foo/baz');
         expect(normalize('foo/bar/../../baz')).toBe('baz');
+        expect(normalize('../../foo/../../bar')).toBe('../../../bar');
+    });
 
+    it('supports a path mapping', function () {
+        expect(normalize('foo/baz', {
+            'foo': 'bar',
+        })).toBe('bar/baz');
 
+        expect(normalize('foo/bar/baz', {
+            'foo/bar': 'ping/pong/pang',
+        })).toBe('ping/pong/pang/baz');
     });
 });
