@@ -2,7 +2,7 @@ module.exports = (function () {
     'use strict';
 
     var alchemy = require('alchemy.js');
-    var potionC = require('./PotionC');
+    var potionC = require("./PotionC");
 
     return alchemy.extend(potionC, {
 

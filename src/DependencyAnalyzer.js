@@ -56,7 +56,7 @@ function collectScripts(map) {
 /** @private */
 function findRequired(filepath) {
     var code = fs.readFileSync(filepath, 'utf8').replace(/\n/g, ' ');
-    var matches = code.match(/require\(\'.*?\'\)/g) || [];
+    var matches = code.match(/require\([\'\"].*?[\'\"]\)/g) || [];
 
     return matches.map(function (match) {
         return match.replace(/^require\((\'|\")/, '').replace(/(\'|\")\)$/, '');
